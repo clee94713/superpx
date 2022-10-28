@@ -1,0 +1,20 @@
+app:
+  name: superpx
+
+spring:
+  jpa:
+    show-sql: false
+    generate-ddl: false
+    properties:
+      hibernate:
+        ddl-auto: none
+        dialect: org.hibernate.dialect.Oracle10gDialect
+  profiles:
+    active: ${USE_PROFILE}
+
+primary:
+  datasource:
+    url: jdbc:tibero:thin:@${PRIMARY_DB_HOST}:${PRIMARY_DB_PORT}:tibero
+    driverClassName: com.tmax.tibero.jdbc.TbDriver
+    username: sys
+    password: tibero
