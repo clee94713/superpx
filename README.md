@@ -1,26 +1,8 @@
-# Tmax Edu Spring Project BoilerPlate
-
-| 작성/변경일 | 변경사항 | 작성자 |
-| --- | --- | --- |
-| 2022.02.17 | 최초 작성 | 나은총 |
-| 2022.02.23 | single/multiple datasource 분리 | 나은총 |
+# TmaxCloud SuperPX 형상관리 Spring Project
 
 ## 개요
-- Tmax Edu AE본부 스프링 백엔드 프로젝트의 스켈레톤
+- TmaxCloud SuperPX 형상관리 스프링 백엔드 프로젝트
 - Single Datasource 사용
-
-## 프로젝트 복제 방법
-### 1. Clone 및 프로젝트 명 변경
-- 필요에 따라 원하는 branch에서 clone 수행
-  - 루트 폴더 명은 clone 시 원하는 이름으로 지정해서 사용할 것. 스크립트에서 변경해주지 않음.
-- intelliJ, eclipse 등을 이용해서 refactor 하거나, 아래 내용대로 스크립트를 이용해서 프로젝트 이름을 변경
-- 스크립트 사용 시
-  - 프로젝트 폴더 내 renameProject.py 파일에서 newProjectName 값 변경
-  - `python3 renameProject.py` 명령어 실행
-  - 정상적으로 프로젝트 실행 여부 확인 후 renameProject.py 는 삭제해도 무방함
-
-### 2. 예제 코드 확인
-- (todo) 예제 코드에 대한 설명 작성
 
 ## Versions
 
@@ -117,7 +99,6 @@ src.main.java.package
 │
 ├ ...
 ├ build.gradle
-├ renameProject.py                                        // 프로젝트 이름 변경을 위한 파이썬 스크립트
 └ ...
 
 ```
