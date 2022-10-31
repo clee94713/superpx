@@ -3,18 +3,18 @@ app:
 
 spring:
   jpa:
-    show-sql: false
+    show-sql: true
     generate-ddl: false
     properties:
       hibernate:
         ddl-auto: none
         dialect: org.hibernate.dialect.Oracle10gDialect
   profiles:
-    active: ${USE_PROFILE}
+    active: ${USE_PROFILE:test}
 
 primary:
   datasource:
-    url: jdbc:tibero:thin:@${PRIMARY_DB_HOST}:${PRIMARY_DB_PORT}:tibero
+    url: jdbc:tibero:thin:@${PRIMARY_DB_HOST:192.168.9.132}:${PRIMARY_DB_PORT:8629}:tibero
     driverClassName: com.tmax.tibero.jdbc.TbDriver
-    username: sys
-    password: tibero
+    username: ${PRIMARY_DB_USERNAME:superpx}
+    password: ${PRIMARY_DB_USERNAME:superpx}

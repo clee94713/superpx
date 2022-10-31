@@ -12,11 +12,14 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "USERS")
+@Table(name = "USERS", schema = "SUPERPX")
 public class UsersEntity {
 
     @Id
+    @Column(name = "ID")
     private Long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "email")
     private String email;
 }

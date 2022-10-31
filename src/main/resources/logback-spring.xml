@@ -8,7 +8,7 @@
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>DEBUG</level>
+            <level>INFO</level>
         </filter>
 
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -71,11 +71,11 @@
         <appender-ref ref="ERROR_ROLLING"/>
     </root>
 
-<!--    특정 패키지에 대한 로깅 레벨 별도 설정 -->
-<!--    <logger name="org.apache.ibatis" level="DEBUG" additivity="false"> -->
-<!--        <appender-ref ref="CONSOLE"/> -->
-<!--        <appender-ref ref="FILE_ROLLING"/> -->
-<!--        <appender-ref ref="ERROR_ROLLING"/> -->
-<!--    </logger>-->
+    <!--    특정 패키지에 대한 로깅 레벨 별도 설정 -->
+    <!--    <logger name="org.apache.ibatis" level="DEBUG" additivity="false"> -->
+    <!--        <appender-ref ref="CONSOLE"/> -->
+    <!--        <appender-ref ref="FILE_ROLLING"/> -->
+    <!--        <appender-ref ref="ERROR_ROLLING"/> -->
+    <!--    </logger>-->
 
 </configuration>

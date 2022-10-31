@@ -14,9 +14,9 @@ public class SwaggerConfig {
     public OpenAPI springOpenAPI() {
         return new OpenAPI()
                 .info(new Info().title("Template API")
-                        .description("Tmax Edu Spring Template Application API doc")
+                        .description("TmaxCloud SuperPX Application API doc")
                         .contact(new Contact().name("Tmax"))
-                        .license(new License().name("Tmax Edu"))
+                        .license(new License().name("TmaxCloud"))
                 );
     }
 

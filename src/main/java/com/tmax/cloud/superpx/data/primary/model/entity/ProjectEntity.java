@@ -16,8 +16,10 @@ import javax.persistence.*;
 public class ProjectEntity {
 
     @Id
+    @Column(name = "ID")
     @SequenceGenerator(name = "PROJECT_SEQ_GENERATOR", sequenceName = "PROJECT_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROJECT_SEQ_GENERATOR")
     private Long id;
+    @Column(name = "name")
     private String name;
 }
