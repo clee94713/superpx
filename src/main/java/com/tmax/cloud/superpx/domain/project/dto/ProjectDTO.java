@@ -12,4 +12,11 @@ public class ProjectDTO {
         Long id;
         String name;
     }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Create {
+        String name;
+    }
 }
