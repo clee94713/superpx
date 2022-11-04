@@ -47,7 +47,7 @@ public class ProjectService {
     }
 
     //프로젝트 리스트 가져오기
-    public List<ProjectDTO.Get> getProject() {
+    public List<ProjectDTO.Get> getProjects() {
         return modelMapper.map(projectRepository.findAll(), new TypeToken<List<ProjectDTO.Get>>(){}.getType());
     }
 }

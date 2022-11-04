@@ -10,7 +10,6 @@ public class ReferenceDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Create {
-        Long id;
         Long projectId;
         String name;
         ReferenceType type;
