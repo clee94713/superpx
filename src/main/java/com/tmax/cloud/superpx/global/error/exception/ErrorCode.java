@@ -16,7 +16,8 @@ public enum ErrorCode {
     INTERNAL_SERVER_ERROR(500, "C0004", "Internal server error"),
     INVALID_TYPE_VALUE(400, "C0005", " Invalid type value"),
     HANDLE_ACCESS_DENIED(403, "C0006", "Access denied"),
-    INVALID_TOKEN(403, "C0007", "Invalid token");
+    INVALID_TOKEN(403, "C0007", "Invalid token"),
+    REFERENCE_HEAD_NOT_FOUND(400, "C0008", "Reference HEAD not found");
 
     @JsonIgnore
     private final int status;

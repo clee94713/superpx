@@ -13,6 +13,8 @@ public class ReferenceDTO {
         Long projectId;
         String name;
         ReferenceType type;
+        Long currentReferenceId;
+        Long currentCommitId;
     }
 
     @Data
@@ -28,12 +30,5 @@ public class ReferenceDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class GetSourceCode {
-    }
-
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class GetHEAD {
-        Long commitId;
     }
 }
