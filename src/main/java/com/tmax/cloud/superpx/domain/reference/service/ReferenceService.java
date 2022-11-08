@@ -59,6 +59,7 @@ public class ReferenceService {
     }
 
     //ref 삭제, 마스터 브랜치는 삭제 불가
+    //todo transaction 고려
     public void deleteReference(Long referenceId) {
         Optional<ReferenceEntity> optionalReferenceEntity = referenceRepository.findById(referenceId);
 

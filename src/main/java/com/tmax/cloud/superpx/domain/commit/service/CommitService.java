@@ -45,7 +45,7 @@ public class CommitService {
         return modelMapper.map(newCommitEntity, CommitDTO.Get.class);
     }
 
-    //todo commit revert
+    //commit revert
     //todo 가능 범위 정해야 할 듯, 중간에 다른 브랜치 끼어있는 경우
     public CommitDTO.Get revertCommit(CommitDTO.Revert revertCommitDTO) {
         Optional<CommitEntity> optionalCommitEntity = commitRepository.findById(revertCommitDTO.getRevertId());
@@ -56,10 +56,14 @@ public class CommitService {
 
         CommitEntity commitEntity = optionalCommitEntity.get();
 
+        //todo 사이의 commit 삭제
+
+        //todo 관련된 commit_in_reference, commit_parent 삭제
+
         return modelMapper.map(commitEntity, CommitDTO.Get.class);
     }
 
-    //todo commit 가져오기
+    //commit 가져오기
     //todo 속해있는 path 가져오기 추가
     public CommitDTO.Get getCommit(Long id) {
         Optional<CommitEntity> optionalCommitEntity = commitRepository.findById(id);
@@ -73,7 +77,7 @@ public class CommitService {
         return modelMapper.map(commitEntity, CommitDTO.Get.class);
     }
 
-    //todo commit 히스토리 가져오기
+    //commit 히스토리 가져오기
     public List<CommitDTO.Get> getCommitHistory(Long referenceId) {
         Long HEADId = getHEAD(referenceId);
         List<CommitDTO.Get> historyList = new ArrayList<CommitDTO.Get>();
@@ -107,6 +111,7 @@ public class CommitService {
         return historyList;
     }
 
+    //HEAD commit 가져오기
     public Long getHEAD(Long referenceId) {
         List<CommitInReferenceEntity> commitInReferenceEntities = commitInReferenceRepository.findAllByReferenceId(referenceId);
 
