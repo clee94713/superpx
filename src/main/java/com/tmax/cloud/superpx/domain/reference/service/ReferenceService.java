@@ -76,8 +76,8 @@ public class ReferenceService {
     }
 
     //ref list 가져오기
-    public List<ReferenceDTO.Get> getReferences() {
-        return modelMapper.map(referenceRepository.findAll(), new TypeToken<List<ReferenceDTO>>(){}.getType());
+    public List<ReferenceDTO.Get> getReferences(Long projectId) {
+        return modelMapper.map(referenceRepository.findAllByProjectId(projectId), new TypeToken<List<ReferenceDTO>>(){}.getType());
     }
 
     //ref 정보 가져오기
@@ -94,7 +94,7 @@ public class ReferenceService {
         return modelMapper.map(referenceEntity, ReferenceDTO.Get.class);
     }
 
-    //todo ref HEAD 가져오기
+    //ref HEAD 가져오기
     public Long getReferenceHEAD(Long referenceId) {
         List<CommitInReferenceEntity> commitInReferenceEntities = commitInReferenceRepository.findAllByReferenceId(referenceId);
 

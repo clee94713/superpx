@@ -7,10 +7,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -25,4 +24,26 @@ public class ReferenceController {
         return DataResponse.success(referenceService.createReference(referenceDTO));
     }
 
+    @Operation(summary = "reference 삭제", description = "reference 삭제, master 브랜치 삭제 불가")
+    @DeleteMapping("/{id}")
+    public void deleteReference(@PathVariable(value = "id") Long id) {
+        referenceService.deleteReference(id);
+    }
+
+    @Operation(summary = "reference list 가져오기", description = "해당 프로젝트의 reference list 가져오기")
+    @GetMapping("/list/{projectId}")
+    public ResponseEntity<DataResponse<List<ReferenceDTO.Get>>> getReferences(@PathVariable(value = "projectId") Long projectId) {
+        return DataResponse.success(referenceService.getReferences(projectId));
+    }
+
+    @Operation(summary = "reference 가져오기", description = "reference 가져오기")
+    @GetMapping("/{id}")
+    public ResponseEntity<DataResponse<ReferenceDTO.Get>> getReference(@PathVariable(value = "id") Long id) {
+        return DataResponse.success(referenceService.getReference(id));
+    }
+
+    @Operation(summary = "reference HEAD 가져오기", description = "reference HEAD commitId 가져오기")
+    public ResponseEntity<DataResponse<Long>> getReferenceHEAD(@PathVariable(value = "id") Long id) {
+        return DataResponse.success(referenceService.getReferenceHEAD(id));
+    }
 }
