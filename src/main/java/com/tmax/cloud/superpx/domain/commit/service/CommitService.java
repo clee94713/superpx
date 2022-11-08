@@ -117,15 +117,16 @@ public class CommitService {
                 return commitId;
             }
 
-            Boolean flag = true;
+            boolean flag = true;
             for(CommitParentEntity commitParentEntity : commitParentEntities) {
                 Long commitIdLoop = commitParentEntity.getCommitId();
                 List<CommitInReferenceEntity> commitInReferenceEntitiesLoop = commitInReferenceRepository.findAllByCommitId(commitIdLoop);
 
 
                 for(CommitInReferenceEntity temp : commitInReferenceEntitiesLoop) {
-                    if(referenceId == temp.getReferenceId()) {
+                    if(referenceId.equals(temp.getReferenceId())) {
                         flag = false;
+                        break;
                     }
                 }
             }
