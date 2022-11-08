@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface CommitParentRepository extends JpaRepository<CommitParentEntity, Long> {
     List<CommitParentEntity> findAllByParentId(Long parentId);
+    Optional<CommitParentEntity> findByCommitId(Long commitId);
 }

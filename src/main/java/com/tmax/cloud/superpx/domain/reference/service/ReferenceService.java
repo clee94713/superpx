@@ -27,7 +27,8 @@ public class ReferenceService {
     private final CommitInReferenceRepository commitInReferenceRepository;
     private final CommitParentRepository commitParentRepository;
 
-    //todo ref 생성
+    //ref 생성
+    //todo 트렌젝션 고려
     public ReferenceDTO.Get createReference(ReferenceDTO.Create newReferenceDTO) {
         ReferenceEntity newReferenceEntity =
                 ReferenceEntity.builder()
@@ -36,14 +37,14 @@ public class ReferenceService {
                         .type(newReferenceDTO.getType())
                         .build();
 
-        //todo master 중복 검사 필요
+        //todo 중복 검사
+
         if(newReferenceDTO.getName() == "master") {
             newReferenceEntity = referenceRepository.save(newReferenceEntity);
 
             return modelMapper.map(newReferenceEntity, ReferenceDTO.Get.class);
         }
 
-        //todo 중복 검사
         newReferenceEntity = referenceRepository.save(newReferenceEntity);
 
         CommitInReferenceEntity newCommitInReferenceEntity =
@@ -52,12 +53,12 @@ public class ReferenceService {
                         .commitId(newReferenceDTO.getCurrentCommitId())
                         .build();
 
-        newCommitInReferenceEntity = commitInReferenceRepository.save(newCommitInReferenceEntity);
+        commitInReferenceRepository.save(newCommitInReferenceEntity);
 
         return modelMapper.map(newReferenceEntity, ReferenceDTO.Get.class);
     }
 
-    //todo ref 삭제, 마스터 브랜치는 삭제 불가
+    //ref 삭제, 마스터 브랜치는 삭제 불가
     public void deleteReference(Long referenceId) {
         Optional<ReferenceEntity> optionalReferenceEntity = referenceRepository.findById(referenceId);
 
@@ -94,33 +95,5 @@ public class ReferenceService {
         return modelMapper.map(referenceEntity, ReferenceDTO.Get.class);
     }
 
-    //ref HEAD 가져오기
-    public Long getReferenceHEAD(Long referenceId) {
-        List<CommitInReferenceEntity> commitInReferenceEntities = commitInReferenceRepository.findAllByReferenceId(referenceId);
-
-        for(CommitInReferenceEntity commitInReferenceEntity : commitInReferenceEntities) {
-            Long commitId = commitInReferenceEntity.getCommitId();
-            List<CommitParentEntity> commitParentEntities = commitParentRepository.findAllByParentId(commitId);
-            if(commitParentEntities.isEmpty()) {
-                return commitId;
-            }
-
-            Boolean flag = true;
-            for(CommitParentEntity commitParentEntity : commitParentEntities) {
-                Long commitIdLoop = commitParentEntity.getCommitId();
-                List<CommitInReferenceEntity> commitInReferenceEntitiesLoop = commitInReferenceRepository.findAllByCommitId(commitIdLoop);
-
-
-                for(CommitInReferenceEntity temp : commitInReferenceEntitiesLoop) {
-                    if(referenceId == temp.getReferenceId()) {
-                        flag = false;
-                    }
-                }
-            }
-            if(flag) {
-                return commitId;
-            }
-        }
-        throw new BusinessException(ErrorCode.REFERENCE_HEAD_NOT_FOUND);
-    }
+    //todo 머지
 }

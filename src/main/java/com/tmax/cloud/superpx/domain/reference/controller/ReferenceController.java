@@ -41,9 +41,4 @@ public class ReferenceController {
     public ResponseEntity<DataResponse<ReferenceDTO.Get>> getReference(@PathVariable(value = "id") Long id) {
         return DataResponse.success(referenceService.getReference(id));
     }
-
-    @Operation(summary = "reference HEAD 가져오기", description = "reference HEAD commitId 가져오기")
-    public ResponseEntity<DataResponse<Long>> getReferenceHEAD(@PathVariable(value = "id") Long id) {
-        return DataResponse.success(referenceService.getReferenceHEAD(id));
-    }
 }

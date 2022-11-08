@@ -23,6 +23,8 @@ public class ProjectService {
 
     //프로젝트 생성
     public ProjectDTO.Get createProject(ProjectDTO.Create newProjectDTO) {
+        //todo 중복 검사
+
         ProjectEntity newProjectEntity =
                 ProjectEntity.builder()
                         .name(newProjectDTO.getName())
@@ -34,7 +36,7 @@ public class ProjectService {
     }
 
     //프로젝트 삭제
-    //DB에는 남겨 놔야 하는지
+    //todo DB에는 남겨 놔야 하는지
     public void deleteProject(Long projectId) {
         Optional<ProjectEntity> optionalProjectEntity = projectRepository.findById(projectId);
 
