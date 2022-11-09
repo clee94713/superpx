@@ -25,10 +25,4 @@ public class ReferenceDTO {
         String name;
         ReferenceType type;
     }
-
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class GetSourceCode {
-    }
 }

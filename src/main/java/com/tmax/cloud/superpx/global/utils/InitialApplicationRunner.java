@@ -13,10 +13,10 @@ public class InitialApplicationRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        log.trace("Trace Level �׽�Ʈ");
-        log.debug("DEBUG Level �׽�Ʈ");
-        log.info("INFO Level �׽�Ʈ");
-        log.warn("Warn Level �׽�Ʈ");
-        log.error("ERROR Level �׽�Ʈ");
+        log.trace("Trace Level 테스트");
+        log.debug("DEBUG Level 테스트");
+        log.info("INFO Level 테스트");
+        log.warn("Warn Level 테스트");
+        log.error("ERROR Level 테스트");
     }
 }

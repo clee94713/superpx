@@ -21,9 +21,9 @@ import java.util.Arrays;
 public class GlobalExceptionHandler {
 
     /**
-     * javax.validation.Valid or @Validated À¸·Î binding error ¹ß»ı½Ã ¹ß»ıÇÑ´Ù.
-     * HttpMessageConverter ¿¡¼­ µî·ÏÇÑ HttpMessageConverter binding ¸øÇÒ°æ¿ì ¹ß»ı
-     * ÁÖ·Î @RequestBody, @RequestPart ¾î³ëÅ×ÀÌ¼Ç¿¡¼­ ¹ß»ı
+     * javax.validation.Valid or @Validated ìœ¼ë¡œ binding error ë°œìƒì‹œ ë°œìƒí•œë‹¤.
+     * HttpMessageConverter ì—ì„œ ë“±ë¡í•œ HttpMessageConverter binding ëª»í• ê²½ìš° ë°œìƒ
+     * ì£¼ë¡œ @RequestBody, @RequestPart ì–´ë…¸í…Œì´ì…˜ì—ì„œ ë°œìƒ
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * binding error ¹ß»ı½Ã BindException ¹ß»ıÇÑ´Ù.
+     * binding error ë°œìƒì‹œ BindException ë°œìƒí•œë‹¤.
      * ref https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-modelattrib-method-args
      */
     @ExceptionHandler(BindException.class)
@@ -44,8 +44,8 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * enum type ÀÏÄ¡ÇÏÁö ¾Ê¾Æ binding ¸øÇÒ °æ¿ì ¹ß»ı
-     * ÁÖ·Î @RequestParam enumÀ¸·Î binding ¸øÇßÀ» °æ¿ì ¹ß»ı
+     * enum type ì¼ì¹˜í•˜ì§€ ì•Šì•„ binding ëª»í•  ê²½ìš° ë°œìƒ
+     * ì£¼ë¡œ @RequestParam enumìœ¼ë¡œ binding ëª»í–ˆì„ ê²½ìš° ë°œìƒ
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     protected ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Áö¿øÇÏÁö ¾ÊÀº HTTP method È£Ãâ ÇÒ °æ¿ì ¹ß»ı
+     * ì§€ì›í•˜ì§€ ì•Šì€ HTTP method í˜¸ì¶œ í•  ê²½ìš° ë°œìƒ
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     protected ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
@@ -65,7 +65,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Authentication °´Ã¼°¡ ÇÊ¿äÇÑ ±ÇÇÑÀ» º¸À¯ÇÏÁö ¾ÊÀº °æ¿ì ¹ß»ıÇÕ
+     * Authentication ê°ì²´ê°€ í•„ìš”í•œ ê¶Œí•œì„ ë³´ìœ í•˜ì§€ ì•Šì€ ê²½ìš° ë°œìƒí•©
      */
     @ExceptionHandler(AccessDeniedException.class)
     protected ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException e) {

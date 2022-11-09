@@ -21,15 +21,15 @@ public class ServletContextConfig implements WebMvcConfigurer {
     }
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) { // ÀÎÅÍ¼ÁÅÍ µî·Ï
+    public void addInterceptors(InterceptorRegistry registry) { // ì¸í„°ì…‰í„° ë“±ë¡
         registry.addInterceptor(apiInterceptor())
-                .addPathPatterns("/**") // Interceptor°¡ Àû¿ëµÉ °æ·Î
+                .addPathPatterns("/**") // Interceptorê°€ ì ìš©ë  ê²½ë¡œ
                 .excludePathPatterns("/v3/api-docs")
                 .excludePathPatterns("/swagger-resources/**")
                 .excludePathPatterns("/swagger-ui.html")
                 .excludePathPatterns("/webjars/**")
                 .excludePathPatterns("/csrf")
-                .excludePathPatterns("/error**"); // Interceptor°¡ Àû¿ëµÇÁö ¾ÊÀ» °æ·Î
+                .excludePathPatterns("/error**"); // Interceptorê°€ ì ìš©ë˜ì§€ ì•Šì„ ê²½ë¡œ
     }
 
     @Bean
