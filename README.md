@@ -42,15 +42,18 @@ src.main.java.package
   │    
   ├── domain                                              // api 도메인
   │   │
-  │   ├── domain1                                         // 도메인 단위로 폴더 구분(ex. member / admin 등)
+  │   ├── commit                                          // 도메인 단위로 폴더 구분
   │   │   ├── controller                                  // 컨트롤러 코드 작성
-  │   │   ├── dao                                         // 기본 repository에 해당하지 않는 repositorySupport 등 작성
   │   │   ├── dto                                         // DTO
   │   │   └── service                                     // 서비스 코드 작성
   │   │
-  │   └── domain2                                         // 상동.
+  │   ├── project                                         // 상동.
+  │   │   ├── controller
+  │   │   ├── dto
+  │   │   └── service
+  │   │ 
+  │   └── reference                                       // 상동.
   │       ├── controller
-  │       ├── dao
   │       ├── dto
   │       └── service
   │
