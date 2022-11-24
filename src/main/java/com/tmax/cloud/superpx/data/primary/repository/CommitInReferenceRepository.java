@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface CommitInReferenceRepository extends JpaRepository<CommitInReferenceEntity, Long> {
     List<CommitInReferenceEntity> findAllByReferenceId(Long id);
     List<CommitInReferenceEntity> findAllByCommitId(Long commitId);
+    Optional<CommitInReferenceEntity> findByCommitId(Long commitId);
 }

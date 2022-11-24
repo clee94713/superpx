@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +28,8 @@ public class CommitService {
     private final CommitInReferenceRepository commitInReferenceRepository;
     private final CommitParentRepository commitParentRepository;
 
-    //todo commit 생성, transaction 고려
+    //commit 생성
+    @Transactional
     public CommitDTO.Get createCommit(CommitDTO.Create newCommitDTO) {
         CommitEntity newCommitEntity =
                 CommitEntity.builder()
@@ -38,9 +40,27 @@ public class CommitService {
 
         newCommitEntity = commitRepository.save(newCommitEntity);
 
-        //todo commit_in_reference
+        Long commitId = newCommitEntity.getId();
+        Long branchId = newCommitDTO.getReferenceId();
 
-        //todo commit_parent
+        //save commit_in_reference
+        CommitInReferenceEntity newCommitInReferenceEntity =
+                CommitInReferenceEntity.builder()
+                        .referenceId(branchId)
+                        .commitId(commitId)
+                        .build();
+
+        commitInReferenceRepository.save(newCommitInReferenceEntity);
+
+        //save commit_parent
+        Long HEADId = getHEAD(branchId);
+        CommitParentEntity newCommitParentEntity =
+                CommitParentEntity.builder()
+                        .commitId(commitId)
+                        .parentId(HEADId)
+                        .build();
+
+        commitParentRepository.save(newCommitParentEntity);
 
         return modelMapper.map(newCommitEntity, CommitDTO.Get.class);
     }
@@ -64,7 +84,7 @@ public class CommitService {
     }
 
     //commit 가져오기
-    //todo 속해있는 path 가져오기 추가
+    //todo (소스코드 구조 구축 후) 속해있는 path 가져오기 추가
     public CommitDTO.Get getCommit(Long id) {
         Optional<CommitEntity> optionalCommitEntity = commitRepository.findById(id);
 
