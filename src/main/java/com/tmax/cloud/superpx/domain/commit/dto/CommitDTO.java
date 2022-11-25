@@ -8,7 +8,7 @@ public class CommitDTO {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class Create {
+    public static class CommitCreate {
         Long projectId;
         Long referenceId;
         String message;
@@ -18,7 +18,7 @@ public class CommitDTO {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class Get {
+    public static class CommitGet {
         Long id;
         String message;
         Long authorId;
@@ -27,7 +27,7 @@ public class CommitDTO {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class Revert {
+    public static class CommitRevert {
         Long revertId;
         Long referenceId;
     }

@@ -33,7 +33,7 @@ public class ReferenceService {
 
     //ref 생성
     @Transactional
-    public ReferenceDTO.Get createReference(ReferenceDTO.Create newReferenceDTO) {
+    public ReferenceDTO.ReferenceGet createReference(ReferenceDTO.ReferenceCreate newReferenceDTO) {
         ReferenceEntity newReferenceEntity =
                 ReferenceEntity.builder()
                         .projectId(newReferenceDTO.getProjectId())
@@ -41,12 +41,14 @@ public class ReferenceService {
                         .type(newReferenceDTO.getType())
                         .build();
 
+        //todo 프로젝트 있는 지 검사
+
         //todo 중복 검사
 
         if(newReferenceDTO.getName() == "master") {
             newReferenceEntity = referenceRepository.save(newReferenceEntity);
 
-            return modelMapper.map(newReferenceEntity, ReferenceDTO.Get.class);
+            return modelMapper.map(newReferenceEntity, ReferenceDTO.ReferenceGet.class);
         }
 
         newReferenceEntity = referenceRepository.save(newReferenceEntity);
@@ -59,7 +61,7 @@ public class ReferenceService {
 
         commitInReferenceRepository.save(newCommitInReferenceEntity);
 
-        return modelMapper.map(newReferenceEntity, ReferenceDTO.Get.class);
+        return modelMapper.map(newReferenceEntity, ReferenceDTO.ReferenceGet.class);
     }
 
     //ref 삭제
@@ -80,7 +82,7 @@ public class ReferenceService {
             commitInReferenceRepository.delete(commitInReferenceEntity);
 
             Optional<CommitInReferenceEntity> optionalCommitInReferenceEntity = commitInReferenceRepository.findByCommitId(commitId);
-            
+
             if(!optionalCommitInReferenceEntity.isPresent()) {
                 commitRepository.deleteById(commitId);
             }
@@ -91,13 +93,13 @@ public class ReferenceService {
     }
 
     //ref list 가져오기
-    public List<ReferenceDTO.Get> getReferences(Long projectId) {
+    public List<ReferenceDTO.ReferenceGet> getReferences(Long projectId) {
         return modelMapper.map(referenceRepository.findAllByProjectId(projectId), new TypeToken<List<ReferenceDTO>>(){}.getType());
     }
 
     //ref 정보 가져오기
     //todo (소스코드 구조 구축 후) 하위 디렉토리 및 파일 정보 가져오기
-    public ReferenceDTO.Get getReference(Long referenceId) {
+    public ReferenceDTO.ReferenceGet getReference(Long referenceId) {
         Optional<ReferenceEntity> optionalReferenceEntity = referenceRepository.findById(referenceId);
 
         if(!optionalReferenceEntity.isPresent()) {
@@ -106,7 +108,7 @@ public class ReferenceService {
 
         ReferenceEntity referenceEntity = optionalReferenceEntity.get();
 
-        return modelMapper.map(referenceEntity, ReferenceDTO.Get.class);
+        return modelMapper.map(referenceEntity, ReferenceDTO.ReferenceGet.class);
     }
 
     //todo 머지

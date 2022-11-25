@@ -28,7 +28,7 @@ public class ProjectService {
 
     //프로젝트 생성
     @Transactional
-    public ProjectDTO.Get createProject(ProjectDTO.Create newProjectDTO) {
+    public ProjectDTO.ProjectGet createProject(ProjectDTO.ProjectCreate newProjectDTO) {
         //todo 중복 검사
 
         ProjectEntity newProjectEntity =
@@ -39,14 +39,14 @@ public class ProjectService {
         newProjectEntity = projectRepository.save(newProjectEntity);
 
         //master 브랜치 생성
-        ReferenceDTO.Create newReferenceDTO = new ReferenceDTO.Create();
+        ReferenceDTO.ReferenceCreate newReferenceDTO = new ReferenceDTO.ReferenceCreate();
         newReferenceDTO.setProjectId(newProjectEntity.getId());
         newReferenceDTO.setName("master");
         newReferenceDTO.setType(ReferenceType.BRANCH);
 
         referenceService.createReference(newReferenceDTO);
 
-        return modelMapper.map(newProjectEntity, ProjectDTO.Get.class);
+        return modelMapper.map(newProjectEntity, ProjectDTO.ProjectGet.class);
     }
 
     //프로젝트 삭제
@@ -63,7 +63,7 @@ public class ProjectService {
     }
 
     //프로젝트 리스트 가져오기
-    public List<ProjectDTO.Get> getProjects() {
-        return modelMapper.map(projectRepository.findAll(), new TypeToken<List<ProjectDTO.Get>>(){}.getType());
+    public List<ProjectDTO.ProjectGet> getProjects() {
+        return modelMapper.map(projectRepository.findAll(), new TypeToken<List<ProjectDTO.ProjectGet>>(){}.getType());
     }
 }

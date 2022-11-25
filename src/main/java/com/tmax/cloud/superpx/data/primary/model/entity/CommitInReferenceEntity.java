@@ -15,6 +15,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "COMMIT_IN_REFERENCE", schema = "SUPERPX")
 public class CommitInReferenceEntity {
+
     @Id
     @Column(name = "ID")
     @SequenceGenerator(name = "COMMIT_IN_REFERENCE_SEQ_GENERATOR", sequenceName = "COMMIT_IN_REFERENCE_SEQ", allocationSize = 1)

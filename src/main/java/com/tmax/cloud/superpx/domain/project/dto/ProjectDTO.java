@@ -8,7 +8,7 @@ public class ProjectDTO {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class Get {
+    public static class ProjectGet {
         Long id;
         String name;
     }
@@ -16,7 +16,7 @@ public class ProjectDTO {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class Create {
+    public static class ProjectCreate {
         String name;
     }
 }

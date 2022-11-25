@@ -9,7 +9,7 @@ public class ReferenceDTO {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class Create {
+    public static class ReferenceCreate {
         Long projectId;
         String name;
         ReferenceType type;
@@ -20,7 +20,7 @@ public class ReferenceDTO {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class Get {
+    public static class ReferenceGet {
         Long id;
         String name;
         ReferenceType type;

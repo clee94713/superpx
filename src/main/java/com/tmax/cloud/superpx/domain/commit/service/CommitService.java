@@ -30,7 +30,7 @@ public class CommitService {
 
     //commit 생성
     @Transactional
-    public CommitDTO.Get createCommit(CommitDTO.Create newCommitDTO) {
+    public CommitDTO.CommitGet createCommit(CommitDTO.CommitCreate newCommitDTO) {
         CommitEntity newCommitEntity =
                 CommitEntity.builder()
                         .projectId(newCommitDTO.getProjectId())
@@ -62,12 +62,12 @@ public class CommitService {
 
         commitParentRepository.save(newCommitParentEntity);
 
-        return modelMapper.map(newCommitEntity, CommitDTO.Get.class);
+        return modelMapper.map(newCommitEntity, CommitDTO.CommitGet.class);
     }
 
     //commit revert
     //todo 가능 범위 정해야 할 듯, 중간에 다른 브랜치 끼어있는 경우
-    public CommitDTO.Get revertCommit(CommitDTO.Revert revertCommitDTO) {
+    public CommitDTO.CommitGet revertCommit(CommitDTO.CommitRevert revertCommitDTO) {
         Optional<CommitEntity> optionalCommitEntity = commitRepository.findById(revertCommitDTO.getRevertId());
 
         if(!optionalCommitEntity.isPresent()) {
@@ -80,12 +80,12 @@ public class CommitService {
 
         //todo 관련된 commit_in_reference, commit_parent 삭제
 
-        return modelMapper.map(commitEntity, CommitDTO.Get.class);
+        return modelMapper.map(commitEntity, CommitDTO.CommitGet.class);
     }
 
     //commit 가져오기
     //todo (소스코드 구조 구축 후) 속해있는 path 가져오기 추가
-    public CommitDTO.Get getCommit(Long id) {
+    public CommitDTO.CommitGet getCommit(Long id) {
         Optional<CommitEntity> optionalCommitEntity = commitRepository.findById(id);
 
         if(!optionalCommitEntity.isPresent()) {
@@ -94,13 +94,13 @@ public class CommitService {
 
         CommitEntity commitEntity = optionalCommitEntity.get();
 
-        return modelMapper.map(commitEntity, CommitDTO.Get.class);
+        return modelMapper.map(commitEntity, CommitDTO.CommitGet.class);
     }
 
     //commit 히스토리 가져오기
-    public List<CommitDTO.Get> getCommitHistory(Long referenceId) {
+    public List<CommitDTO.CommitGet> getCommitHistory(Long referenceId) {
         Long HEADId = getHEAD(referenceId);
-        List<CommitDTO.Get> historyList = new ArrayList<CommitDTO.Get>();
+        List<CommitDTO.CommitGet> historyList = new ArrayList<CommitDTO.CommitGet>();
         Long tempId = HEADId;
 
         while(true) {
@@ -111,7 +111,7 @@ public class CommitService {
             }
 
             CommitEntity commitEntity = optionalCommitEntity.get();
-            historyList.add(modelMapper.map(commitEntity, CommitDTO.Get.class));
+            historyList.add(modelMapper.map(commitEntity, CommitDTO.CommitGet.class));
 
             Optional<CommitParentEntity> optionalCommitParentEntity = commitParentRepository.findByCommitId(tempId);
 

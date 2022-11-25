@@ -7,33 +7,36 @@ import com.tmax.cloud.superpx.domain.reference.dto.ReferenceDTO;
 import com.tmax.cloud.superpx.domain.reference.service.ReferenceService;
 import com.tmax.cloud.superpx.global.response.DataResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("project")
+@Tag(name = "project", description = "project api")
 public class ProjectController {
     private final ProjectService projectService;
     private final ReferenceService referenceService;
 
-    @Operation(summary = "프로젝트 생성", description = "프로젝트 생성")
+    @Operation(summary = "project 생성", description = "project 생성")
     @PostMapping
-    public ResponseEntity<DataResponse<ProjectDTO.Get>> createProject(@RequestBody ProjectDTO.Create projectDTO) {
+    public ResponseEntity<DataResponse<ProjectDTO.ProjectGet>> createProject(@RequestBody ProjectDTO.ProjectCreate projectDTO) {
         return DataResponse.success(projectService.createProject(projectDTO));
     }
 
-    @Operation(summary = "프로젝트 삭제", description = "프로젝트 삭제")
+    @Operation(summary = "project 삭제", description = "project 삭제")
     @DeleteMapping("/{id}")
     public void deleteProject(@PathVariable(value = "id") Long id) {
         //프로젝트에 있는 ref 삭제
-        List<ReferenceDTO.Get> referenceDTOs = referenceService.getReferences(id);
-        for(ReferenceDTO.Get referenceDTO : referenceDTOs) {
+        List<ReferenceDTO.ReferenceGet> referenceDTOs = referenceService.getReferences(id);
+        for(ReferenceDTO.ReferenceGet referenceDTO : referenceDTOs) {
             Long referenceId = referenceDTO.getId();
             referenceService.deleteReference(referenceId);
         }
@@ -41,9 +44,9 @@ public class ProjectController {
         projectService.deleteProject(id);
     }
 
-    @Operation(summary = "프로젝트 리스트 가져오기", description = "프로젝트 리스트 가져오기")
+    @Operation(summary = "project list 가져오기", description = "project list 가져오기")
     @GetMapping("/list")
-    public ResponseEntity<DataResponse<List<ProjectDTO.Get>>> getProjects() {
+    public ResponseEntity<DataResponse<List<ProjectDTO.ProjectGet>>> getProjects() {
         return DataResponse.success(projectService.getProjects());
     }
 }
