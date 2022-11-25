@@ -3,9 +3,11 @@ package com.tmax.cloud.superpx.domain.commit.service;
 import com.tmax.cloud.superpx.data.primary.model.entity.CommitEntity;
 import com.tmax.cloud.superpx.data.primary.model.entity.CommitInReferenceEntity;
 import com.tmax.cloud.superpx.data.primary.model.entity.CommitParentEntity;
+import com.tmax.cloud.superpx.data.primary.model.entity.ReferenceEntity;
 import com.tmax.cloud.superpx.data.primary.repository.CommitInReferenceRepository;
 import com.tmax.cloud.superpx.data.primary.repository.CommitParentRepository;
 import com.tmax.cloud.superpx.data.primary.repository.CommitRepository;
+import com.tmax.cloud.superpx.data.primary.repository.ReferenceRepository;
 import com.tmax.cloud.superpx.domain.commit.dto.CommitDTO;
 import com.tmax.cloud.superpx.global.error.exception.BusinessException;
 import com.tmax.cloud.superpx.global.error.exception.ErrorCode;
@@ -27,10 +29,20 @@ public class CommitService {
     private final CommitRepository commitRepository;
     private final CommitInReferenceRepository commitInReferenceRepository;
     private final CommitParentRepository commitParentRepository;
+    private final ReferenceRepository referenceRepository;
 
     //commit 생성
     @Transactional
     public CommitDTO.CommitGet createCommit(CommitDTO.CommitCreate newCommitDTO) {
+        Long projectId = newCommitDTO.getProjectId();
+        Long branchId = newCommitDTO.getReferenceId();
+        Long HEADId = getHEAD(branchId);
+
+        Optional<ReferenceEntity> optionalReferenceEntity = referenceRepository.findByIdAndProjectId(branchId, projectId);
+        if(!optionalReferenceEntity.isPresent()) {
+            throw new BusinessException(ErrorCode.ENTITY_NOT_FOUND);
+        }
+
         CommitEntity newCommitEntity =
                 CommitEntity.builder()
                         .projectId(newCommitDTO.getProjectId())
@@ -41,7 +53,6 @@ public class CommitService {
         newCommitEntity = commitRepository.save(newCommitEntity);
 
         Long commitId = newCommitEntity.getId();
-        Long branchId = newCommitDTO.getReferenceId();
 
         //save commit_in_reference
         CommitInReferenceEntity newCommitInReferenceEntity =
@@ -53,7 +64,6 @@ public class CommitService {
         commitInReferenceRepository.save(newCommitInReferenceEntity);
 
         //save commit_parent
-        Long HEADId = getHEAD(branchId);
         CommitParentEntity newCommitParentEntity =
                 CommitParentEntity.builder()
                         .commitId(commitId)
@@ -66,7 +76,7 @@ public class CommitService {
     }
 
     //commit revert
-    //todo 가능 범위 정해야 할 듯, 중간에 다른 브랜치 끼어있는 경우
+    //todo 가능 범위 정해야 할 듯, 중간에 다른 브랜치 끼어있는 경우 논의 필요
     public CommitDTO.CommitGet revertCommit(CommitDTO.CommitRevert revertCommitDTO) {
         Optional<CommitEntity> optionalCommitEntity = commitRepository.findById(revertCommitDTO.getRevertId());
 
@@ -101,6 +111,11 @@ public class CommitService {
     public List<CommitDTO.CommitGet> getCommitHistory(Long referenceId) {
         Long HEADId = getHEAD(referenceId);
         List<CommitDTO.CommitGet> historyList = new ArrayList<CommitDTO.CommitGet>();
+
+        if(HEADId == null) {
+            return historyList;
+        }
+
         Long tempId = HEADId;
 
         while(true) {
@@ -134,6 +149,10 @@ public class CommitService {
     //HEAD commit 가져오기
     public Long getHEAD(Long referenceId) {
         List<CommitInReferenceEntity> commitInReferenceEntities = commitInReferenceRepository.findAllByReferenceId(referenceId);
+
+        if(commitInReferenceEntities.isEmpty()) {
+            return null;
+        }
 
         for(CommitInReferenceEntity commitInReferenceEntity : commitInReferenceEntities) {
             Long commitId = commitInReferenceEntity.getCommitId();

@@ -48,7 +48,7 @@ public class CommitController {
 
     @Operation(summary = "HEAD 가져오기", description = "HEAD commitId 가져오기")
     @GetMapping("/{referenceId}/HEAD")
-    public ResponseEntity<DataResponse<Long>> getReferenceHEAD(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<DataResponse<Long>> getReferenceHEAD(@PathVariable(value = "referenceId") Long id) {
         return DataResponse.success(commitService.getHEAD(id));
     }
 }

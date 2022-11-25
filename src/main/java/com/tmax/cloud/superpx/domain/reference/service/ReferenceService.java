@@ -53,9 +53,15 @@ public class ReferenceService {
 
         newReferenceEntity = referenceRepository.save(newReferenceEntity);
 
+        //todo 커밋 없는 마스터브렌치만 있는 상태에서 또 브랜치 생성이 가능한지 논의 필요 \
+        // -> 두 브랜치에 생성되는 커밋이 연결이 안됨 \
+        // 일단 불가능으로 판단, currentCommitId를 인풋으로 받음.
+
+        //todo {currentReferenceId, currentCommitId}인 커밋이 존재하는 지
+
         CommitInReferenceEntity newCommitInReferenceEntity =
                 CommitInReferenceEntity.builder()
-                        .referenceId(newReferenceDTO.getCurrentReferenceId())
+                        .referenceId(newReferenceEntity.getId())
                         .commitId(newReferenceDTO.getCurrentCommitId())
                         .build();
 
@@ -94,7 +100,7 @@ public class ReferenceService {
 
     //ref list 가져오기
     public List<ReferenceDTO.ReferenceGet> getReferences(Long projectId) {
-        return modelMapper.map(referenceRepository.findAllByProjectId(projectId), new TypeToken<List<ReferenceDTO>>(){}.getType());
+        return modelMapper.map(referenceRepository.findAllByProjectId(projectId), new TypeToken<List<ReferenceDTO.ReferenceGet>>(){}.getType());
     }
 
     //ref 정보 가져오기
